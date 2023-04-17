@@ -43,7 +43,7 @@
       <div class="container">
         <div class="row justify-content-center align-items-center">
           <div class="col-lg-9 text-center mt-5">
-            <h1 class="heading" data-aos="fade-up">Search</h1>
+            <h1 class="heading" data-aos="fade-up">Search<br>"[[${keyword}]]"</h1>
 
             <nav
               aria-label="breadcrumb"
@@ -68,19 +68,21 @@
     <div class="section bg-light">
       <div class="container">
         <div class="row">
+        <th:block th:each="book : ${list}">
           <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
             <div class="box-feature mb-4">
-              <span class="flaticon-house mb-4 d-block"></span>
-              <h3 class="text-black mb-3 font-weight-bold">
-                Quality Properties
+              <img alt="" th:src=${#strings.substring(book.thumbnail,1,#strings.length(book.thumbnail)-1)} width="100" height="130" style="margin-bottom: 1rem;">
+              <h3 class="text-black mb-3 font-weight-bold" style="min-height: 4rem;">
+                [[${book.title}]]
               </h3>
-              <p class="text-black-50">
-                Far far away, behind the word mountains, far from the countries
-                Vokalia and Consonantia, there live the blind texts.
+              <small>- [[${book.author}]]</small>
+              <p th:if="${#strings.substring(book.contents,1,#strings.length(book.contents)-1) != null and #strings.substring(book.contents,1,#strings.length(book.contents)-1) != ''}"
+               class="text-black-50" th:text="${book.contents.length() > 70 ? #strings.substring(book.contents, 0, 70) : book.contents} + ..." style="min-height: 100px;">
               </p>
               <p><a href="#" class="learn-more">독후감 작성</a></p>
             </div>
           </div>
+          </th:block>
           
           
         </div>

@@ -13,7 +13,7 @@ class BookBridgeApplicationTests {
 	SearchService searchService;
 	
 	@Test
-	void contextLoads() {
+	void contextLoads() throws Exception {
 		searchService.searchResult("자바");
 	}
 

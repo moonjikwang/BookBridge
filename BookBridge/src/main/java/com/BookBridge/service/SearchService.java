@@ -1,28 +1,17 @@
 package com.BookBridge.service;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 import com.BookBridge.dto.BookDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
@@ -49,17 +38,28 @@ public class SearchService {
 		);
 
 		String responseBody = response.getBody();
-		System.out.println(responseBody);
 		
-        ObjectMapper mapper = new ObjectMapper();
-        List<BookDTO> books = null;
-		try {
-			books = mapper.readValue(responseBody, new TypeReference<List<BookDTO>>() {});
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode node = null;
+			try {
+				node = mapper.readTree(responseBody);
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
+		List<BookDTO> list = new ArrayList<BookDTO>();
+		JsonNode documents = node.get("documents");
+		for (JsonNode document : documents) {
+			BookDTO dto = BookDTO.builder()
+			.author(document.get("authors").toString())
+			.title(document.get("title").toString())
+			.thumbnail(document.get("thumbnail").toString())
+			.publisher(document.get("publisher").toString())
+			.contents(document.get("contents").toString())
+			.build();
+		    list.add(dto);
 		}
-        System.out.println(books);
-		return null;
+		System.out.println(list);
+		
+		return list;
 	}
 }
