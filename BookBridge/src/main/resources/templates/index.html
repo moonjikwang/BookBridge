@@ -80,22 +80,17 @@
       </div>
     </div>
 
-    <div class="section">
+    <div class="section" id="section1">
       <div class="container">
         <div class="row mb-5 align-items-center">
           <div class="col-lg-6">
-            <h2 class="font-weight-bold text-primary heading">
-              Popular Properties
-            </h2>
+            <h3 class="font-weight-bold text-primary heading">
+              <b>인기 도서</b>
+            </h3>
           </div>
           <div class="col-lg-6 text-lg-end">
             <p>
-              <a
-                href="#"
-                target="_blank"
-                class="btn btn-primary text-white py-3 px-4"
-                >View all properties</a
-              >
+              <small>가장 많은 독후감이 등록된 도서</small>
             </p>
           </div>
         </div>
@@ -443,9 +438,9 @@
       <div class="container">
         <div class="row mb-5 align-items-center">
           <div class="col-md-6">
-            <h2 class="font-weight-bold heading text-primary mb-4 mb-md-0">
-              Customer Says
-            </h2>
+            <h3 class="font-weight-bold heading text-primary mb-4 mb-md-0">
+              <b>최근 작성 독후감</b>
+            </h3>
           </div>
           <div class="col-md-6 text-md-end">
             <div id="testimonial-nav">
@@ -578,13 +573,13 @@
     <div class="section">
       <div class="row justify-content-center footer-cta" data-aos="fade-up">
         <div class="col-lg-7 mx-auto text-center">
-          <h2 class="mb-4">Be a part of our growing real state agents</h2>
+          <h2 class="mb-4">회원가입 후 나의 경험을 공유하세요.</h2>
           <p>
             <a
               href="#"
               target="_blank"
               class="btn btn-primary text-white py-3 px-4"
-              >Apply for Real Estate agent</a
+              >회원 가입</a
             >
           </p>
         </div>
@@ -594,8 +589,9 @@
     </div>
 
     
-
+<th:block th:replace="fragments/modal :: modalFragment"></th:block>
     <th:block th:replace="fragments/footer :: footerFragment"></th:block>
+    
     <!-- /.site-footer -->
 
     <!-- Preloader -->

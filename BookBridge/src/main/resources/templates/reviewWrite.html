@@ -1,0 +1,193 @@
+<!-- /*
+* Template Name: Property
+* Template Author: Untree.co
+* Template URI: https://untree.co/
+* License: https://creativecommons.org/licenses/by/3.0/
+*/ -->
+<html xmlns:th="http://www.thymeleaf.org"  lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Untree.co" />
+    <link rel="shortcut icon" href="favicon.png" />
+
+    <meta name="description" content="" />
+    <meta name="keywords" content="bootstrap, bootstrap5" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="fonts/icomoon/style.css" />
+    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css" />
+
+    <link rel="stylesheet" href="css/tiny-slider.css" />
+    <link rel="stylesheet" href="css/aos.css" />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <title>
+      BookBridge &mdash; 
+    </title>
+    <style>
+    .contact-info h4, .contact-info .h4{
+    padding: 0px;
+    }
+    .rating {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: left;
+}
+
+.rating > input{ display:none;}
+
+.rating > label {
+  position: relative;
+    width: 1em;
+    font-size: 30px;
+    color: #FFD600;
+    cursor: pointer;
+}
+.rating > label::before{ 
+  content: "\2605";
+  position: absolute;
+  opacity: 0;
+}
+.rating > label:hover:before,
+.rating > label:hover ~ label:before {
+  opacity: 1 !important;
+}
+
+.rating > input:checked ~ label:before{
+  opacity:1;
+}
+
+.rating:hover > input:checked ~ label:before{ opacity: 0.4; }
+    </style>
+    <script th:inline="javascript">
+var isNotMember = /*[[${session.userInfo == null}]]*/"";
+if(isNotMember){
+	alert("로그인 후 이용가능합니다.");
+	window.history.back();
+}
+</script>
+  </head>
+  <body>
+  
+    <th:block th:replace="fragments/header :: headerFragment"></th:block>
+
+    <div
+      class="hero page-inner overlay"
+      style="background-image: url('images/hero_bg_1.jpg')"
+    >
+      <div class="container">
+        <div class="row justify-content-center align-items-center">
+          <div class="col-lg-9 text-center mt-5">
+            <h1 class="heading" data-aos="fade-up">독후감 작성</h1>
+
+            <nav
+              aria-label="breadcrumb"
+              data-aos="fade-up"
+              data-aos-delay="200"
+            >
+              <ol class="breadcrumb text-center justify-content-center">
+                <li class="breadcrumb-item"><a href="index">Home</a></li>
+                <li
+                  class="breadcrumb-item active text-white-50"
+                  aria-current="page"
+                >
+                  독후감 작성
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div
+            class="col-lg-4 mb-5 mb-lg-0"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
+            <div class="contact-info">
+              <div class="address mt-2" style="display: flex;">
+                <img alt="" th:src=${#strings.substring(book.thumbnail,1,#strings.length(book.thumbnail)-1)} width="100" height="130" style="display: inline-block;">
+                <h4 class="mb-2">[[${book.title}]]
+                <br><br>
+                <small>[[${book.author}]]</small>
+                </h4>
+                
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+            <form action="reviewWrite" method="POST">
+            <input type="hidden" name="isbn" th:value="${#strings.substring(book.isbn,1,11)}">
+            <input type="hidden" name="id" th:value="${session.userInfo.getId()}">
+              <div class="row">
+              <div class="col-3 mb-3" >
+              <h4 style="text-align: center; margin-bottom: 0px; padding-top: 13px;">
+              <b>종합 평점</b></h4>
+              </div>
+                <div class="col-6 mb-3">
+                 <div class="rating">
+  <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label>
+  <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label>
+  <input type="radio" name="rating" value="3" id="3" checked="checked"><label for="3">☆</label>
+  <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label>
+  <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
+</div>
+                </div>
+                <div class="col-12 mb-3">
+                  <textarea
+                    name="review"
+                    id=""
+                    cols="30"
+                    rows="7"
+                    class="form-control"
+                    placeholder="감상평을 입력해 주세요."
+                    required="required"
+                  ></textarea>
+                </div>
+
+                <div class="col-12">
+                  <input
+                    type="submit"
+                    value="Send Message"
+                    class="btn btn-primary"
+                  />
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.untree_co-section -->
+
+    <th:block th:replace="fragments/modal :: modalFragment"></th:block>
+    <th:block th:replace="fragments/footer :: footerFragment"></th:block>
+    <!-- /.site-footer -->
+
+    <!-- Preloader -->
+    <div id="overlayer"></div>
+    <div class="loader">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/tiny-slider.js"></script>
+    <script src="js/aos.js"></script>
+    <script src="js/navbar.js"></script>
+    <script src="js/counter.js"></script>
+    <script src="js/custom.js"></script>
+  </body>
+</html>

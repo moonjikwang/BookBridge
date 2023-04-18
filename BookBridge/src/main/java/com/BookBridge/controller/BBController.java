@@ -14,4 +14,5 @@ public class BBController {
 	@GetMapping("/index")
 	public void index() {
 	}
+
 }

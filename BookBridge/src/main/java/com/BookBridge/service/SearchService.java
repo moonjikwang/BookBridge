@@ -55,6 +55,8 @@ public class SearchService {
 			.thumbnail(document.get("thumbnail").toString())
 			.publisher(document.get("publisher").toString())
 			.contents(document.get("contents").toString())
+			.isbn(document.get("isbn").toString())
+			.url(document.get("url").toString())
 			.build();
 		    list.add(dto);
 		}
