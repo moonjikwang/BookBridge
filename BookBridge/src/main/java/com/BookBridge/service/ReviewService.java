@@ -18,14 +18,16 @@ public class ReviewService {
 		if(dto == null || dto.getId() == null || dto.getIsbn() == null) {
 			return false;
 		}
-		Review entity = reviewRepository.save(dtoToEntity(dto));
+		Review review = dtoToEntity(dto);
+		Review entity = reviewRepository.save(review);
 		return entity.getNo() != null;
 	}
 	
 	private Review dtoToEntity(ReviewDTO dto) {
+		Member mem = Member.builder().id(dto.getId()).build();
 		return Review.builder()
 				.isbn(dto.getIsbn())
-				.member(Member.builder().id(dto.getId()).build())
+				.member(mem)
 				.rating(dto.getRating())
 				.review(dto.getReview())
 				.build();
