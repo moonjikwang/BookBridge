@@ -22,6 +22,8 @@ public class MemberController {
 	@Autowired
 	MemberService memberService;
 	
+	
+	
 	@PostMapping("login")
 	public String login(MemberDTO dto,HttpServletRequest request,HttpServletResponse res) {
 		HttpSession session = request.getSession();

@@ -7,6 +7,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +32,9 @@ public class ReviewController {
 	ReviewService reviewService;
 
 	@GetMapping("/reviewList")
-	public void reviewList() {
+	public void reviewList(Pageable pageable, Model model) {
+		Page<ReviewDTO> reviews = reviewService.getList(PageRequest.of(pageable.getPageNumber(), 9,Sort.by("regDate").descending()));
+		model.addAttribute("reviews", reviews);
 	}
 
 	@GetMapping("/reviewWrite")

@@ -1,5 +1,7 @@
 package com.BookBridge.dto;
 
+import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +19,8 @@ public class ReviewDTO {
     private String thumbnail; //섬네일
     private String title; // 타이틀
     private String author; //저자
-    
+    private String url;
+    private LocalDateTime regDate;
     private String id;
     private String review;
     private int rating;
