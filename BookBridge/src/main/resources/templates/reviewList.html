@@ -70,16 +70,18 @@
         <th:block th:each="review : ${reviews}">
           <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
             <div class="property-item mb-30">
-              <div class="testimonial" style="min-height: 400px; border-bottom: 1px solid #664B00;">
+              <div class="testimonial" style="min-height: 400px; border-bottom: 1px solid #CFCFCF;">
                 <a th:href="${#strings.substring(review.url,1,#strings.length(review.url)-1)}"
  target="_blank"
-  th:attr="onclick='window.open(\'' + ${#strings.substring(review.url,1,#strings.length(review.url)-1)} + '\', \'popup\', \'width=800,height=1000\'); return false;'"
+  th:attr="onclick='window.open(\'' + ${#strings.substring(review.url,1,#strings.length(review.url)-1)} + '\', \'popup\', \'width=700,height=1000\'); return false;'"
  >
               <img alt="" th:src=${#strings.substring(review.thumbnail,1,#strings.length(review.thumbnail)-1)} width="130" height="160" style="margin-bottom: 1rem;">
               </a>
                 <div  class="rate" style="font-size: 0;">
                   <span th:each="i : ${#numbers.sequence(1, review.rating)}" class="icon-star text-warning" style="font-size: 14px;"></span>
+                  <th:block th:if="${(5 - review.rating) > 0}">
                   <span th:each="i : ${#numbers.sequence(1, 5-review.rating)}" class="icon-star text-secondary" style="font-size: 14px;"></span>
+                  </th:block>
                 </div>
                 <h3 class="h5 text-primary mb-4">[[${review.title}]]</h3>
                 <blockquote>
@@ -87,7 +89,17 @@
                     &ldquo;[[${review.review}]]&rdquo;
                   </p>
                 </blockquote>
-                <p class="text-black-50">[[${review.nickName}]]</p>
+                <p class="text-black-50">[[${review.nickName}]] 
+                <span th:if="${session.userInfo != null && review.id == session.userInfo.getId()}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+</svg>
+<a th:href="@{/reviewModify(no=${review.no})}">수정</a> / 
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+</svg>
+<a th:href="@{/reviewDelete(no=${review.no})}">삭제</a></span>
+                </p>
               </div>
             </div>
           </div>

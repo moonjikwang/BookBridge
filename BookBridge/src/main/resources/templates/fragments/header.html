@@ -29,7 +29,7 @@
               <li>
               <a th:if="${session.userInfo == null}" class="js-menu-toggle" href="#" data-bs-toggle="modal" 
               data-bs-target="#loginModal">로그인</a>
-              <a th:if="${session.userInfo != null}" href="logout">[[${session.userInfo.getNickName()}]]님. <span>로그아웃</span></a>
+              <a th:if="${session.userInfo != null}" href="userlogout">[[${session.userInfo.getNickName()}]]님. <span>로그아웃</span></a>
               </li>
             </ul>
 

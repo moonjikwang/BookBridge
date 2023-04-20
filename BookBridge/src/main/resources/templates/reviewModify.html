@@ -122,7 +122,8 @@
           </div>
           <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
             <form action="reviewWrite" method="POST">
-            <input type="hidden" name="isbn" th:value="${#strings.substring(book.isbn,1,11)}">
+            <input type="hidden" name="no" th:value="${book.no}">
+            <input type="hidden" name="isbn" th:value="${book.isbn}">
             <input type="hidden" name="id" th:value="${session.userInfo.getId()}">
               <div class="row">
               <div class="col-3 mb-3" >
@@ -131,11 +132,11 @@
               </div>
                 <div class="col-6 mb-3">
                  <div class="rating">
-  <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label>
-  <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label>
-  <input type="radio" name="rating" value="3" id="3" checked="checked"><label for="3">☆</label>
-  <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label>
-  <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
+  <input type="radio" name="rating" value="5" id="5" th:checked="${book.rating == 5}"><label for="5">☆</label>
+  <input type="radio" name="rating" value="4" id="4" th:checked="${book.rating == 4}"><label for="4">☆</label>
+  <input type="radio" name="rating" value="3" id="3" th:checked="${book.rating == 3}"><label for="3">☆</label>
+  <input type="radio" name="rating" value="2" id="2" th:checked="${book.rating == 2}"><label for="2">☆</label>
+  <input type="radio" name="rating" value="1" id="1" th:checked="${book.rating == 1}"><label for="1">☆</label>
 </div>
                 </div>
                 <div class="col-12 mb-3">
@@ -147,7 +148,7 @@
                     class="form-control"
                     placeholder="감상평을 입력해 주세요."
                     required="required"
-                  ></textarea>
+                  >[[${book.review}]]</textarea>
                 </div>
 
                 <div class="col-12">

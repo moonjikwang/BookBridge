@@ -102,7 +102,7 @@
                   <div class="property-content">
                    <a th:href="${#strings.substring(book.url,1,#strings.length(book.url)-1)}"
  target="_blank"
-  th:attr="onclick='window.open(\'' + ${#strings.substring(book.url,1,#strings.length(book.url)-1)} + '\', \'popup\', \'width=800,height=1000\'); return false;'"
+  th:attr="onclick='window.open(\'' + ${#strings.substring(book.url,1,#strings.length(book.url)-1)} + '\', \'popup\', \'width=700,height=1000\'); return false;'"
  >
               <img alt="" th:src=${#strings.substring(book.thumbnail,1,#strings.length(book.thumbnail)-1)}  style="margin-bottom: 1rem;">
               </a>
@@ -133,7 +133,7 @@
                       <a
                         th:href="${#strings.substring(book.url,1,#strings.length(book.url)-1)}"
  target="_blank"
-  th:attr="onclick='window.open(\'' + ${#strings.substring(book.url,1,#strings.length(book.url)-1)} + '\', \'popup\', \'width=800,height=1000\'); return false;'"
+  th:attr="onclick='window.open(\'' + ${#strings.substring(book.url,1,#strings.length(book.url)-1)} + '\', \'popup\', \'width=700,height=1000\'); return false;'"
                         class="btn btn-primary py-2 px-3"
                         >See details</a
                       >
@@ -198,13 +198,15 @@
               <div class="testimonial">
                 <a th:href="${#strings.substring(review.url,1,#strings.length(review.url)-1)}"
  target="_blank"
-  th:attr="onclick='window.open(\'' + ${#strings.substring(review.url,1,#strings.length(review.url)-1)} + '\', \'popup\', \'width=800,height=1000\'); return false;'"
+  th:attr="onclick='window.open(\'' + ${#strings.substring(review.url,1,#strings.length(review.url)-1)} + '\', \'popup\', \'width=700,height=1000\'); return false;'"
  >
               <img alt="" th:src=${#strings.substring(review.thumbnail,1,#strings.length(review.thumbnail)-1)} width="100" height="130" style="margin-bottom: 1rem;">
               </a>
                  <div  class="rate" style="font-size: 0;">
                   <span th:each="i : ${#numbers.sequence(1, review.rating)}" class="icon-star text-warning" style="font-size: 14px;"></span>
+                   <th:block th:if="${(5 - review.rating) > 0}">
                   <span th:each="i : ${#numbers.sequence(1, 5-review.rating)}" class="icon-star text-secondary" style="font-size: 14px;"></span>
+                </th:block>
                 </div>
                 <h3 class="h5 text-primary mb-4">[[${review.title}]]</h3>
                 <blockquote>

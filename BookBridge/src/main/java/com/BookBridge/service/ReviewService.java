@@ -23,6 +23,22 @@ public class ReviewService {
 	@Autowired
 	SearchService searchService;
 	
+	public void delete(Long no) {
+		ReviewDTO dto = findReview(no);
+		reviewRepository.delete(dtoToEntity(dto));
+	}
+	
+	public ReviewDTO findReview(Long no) {
+	 Review review = reviewRepository.findById(no).get();
+	 ReviewDTO reviewDTO = entityToDto(review);
+	 List<BookDTO> book = searchService.searchResult(review.getIsbn());
+   	 reviewDTO.setUrl(book.get(0).getUrl());
+   	 reviewDTO.setAuthor(book.get(0).getAuthor());
+   	 reviewDTO.setThumbnail(book.get(0).getThumbnail());
+   	 reviewDTO.setTitle(book.get(0).getTitle());
+   	 return reviewDTO;
+	}
+	
 	 public Page<ReviewDTO> getList(Pageable pageable) {
 		 Page<Review> page = reviewRepository.findAll(pageable);
 	     List<ReviewDTO> reviewDTOList = new ArrayList<>();
@@ -67,7 +83,7 @@ public class ReviewService {
 	
 	
 	public boolean register(ReviewDTO dto) {
-		if(dto == null || dto.getId() == null || dto.getIsbn() == null) {
+		if(dto == null || dto.getId() == null) {
 			return false;
 		}
 		Review review = dtoToEntity(dto);
@@ -78,6 +94,7 @@ public class ReviewService {
 	private Review dtoToEntity(ReviewDTO dto) {
 		Member mem = Member.builder().id(dto.getId()).build();
 		return Review.builder()
+				.no(dto.getNo())
 				.isbn(dto.getIsbn())
 				.member(mem)
 				.rating(dto.getRating())
@@ -90,6 +107,7 @@ public class ReviewService {
 				.isbn(entity.getIsbn())
 				.regDate(entity.getRegDate())
 				.nickName(entity.getMember().getNickName())
+				.id(entity.getMember().getId())
 				.rating(entity.getRating())
 				.review(entity.getReview())
 				.build();

@@ -1,6 +1,7 @@
 package com.BookBridge.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.BookBridge.dto.MemberDTO;
@@ -16,14 +17,13 @@ public class MemberService {
 	@Autowired
 	MemberRepository memberRepository;
 	
-	public MemberDTO login(final MemberDTO dto) {
-		if(memberRepository.existsByEmail(dto.getEmail())) {
-			Member member = memberRepository.findByEmailAndPassword(dto.getEmail(), dto.getPassword());
-			if(member != null) {
-				return entityToDto(member);
-			}
-		}
-		return null;
+	
+	public MemberDTO login(final String email, final String password, PasswordEncoder encoder) {
+	    final Member originalUser = memberRepository.findByEmail(email);
+	    if (originalUser != null && encoder.matches(password, originalUser.getPassword())) {
+	        return entityToDto(originalUser);
+	    }
+	    return null;
 	}
 	
 	public MemberDTO register(final MemberDTO dto) {
@@ -33,7 +33,8 @@ public class MemberService {
 		final String email = dto.getEmail();
 		if(memberRepository.existsByEmail(email)) {
 			log.warn("이미 존재하는 이메일임");
-			throw new RuntimeException("이미 존재하는 이메일!!");
+			return null;
+			
 		}
 		//위 검증에 문제가 없으면  저장 및 userEntity 리턴
 		Member member = memberRepository.save(dtoToEntity(dto));

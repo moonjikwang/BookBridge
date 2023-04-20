@@ -73,7 +73,7 @@
             <div class="box-feature mb-4">
             <a th:href="${#strings.substring(book.url,1,#strings.length(book.url)-1)}"
  target="_blank"
-  th:attr="onclick='window.open(\'' + ${#strings.substring(book.url,1,#strings.length(book.url)-1)} + '\', \'popup\', \'width=800,height=1000\'); return false;'"
+  th:attr="onclick='window.open(\'' + ${#strings.substring(book.url,1,#strings.length(book.url)-1)} + '\', \'popup\', \'width=700,height=1000\'); return false;'"
  >
               <img alt="" th:src=${#strings.substring(book.thumbnail,1,#strings.length(book.thumbnail)-1)} width="100" height="130" style="margin-bottom: 1rem;">
               </a>
